@@ -1,0 +1,25 @@
+extends templet
+
+block append styles
+    link(rel='stylesheet', href='stylesheets/register.css')
+block append scripts
+    script(src='/jquery-validation/dist/jquery.validate.min.js')
+    script(src='/javascripts/register.js')
+block append contents
+    .container
+        .row.justify-content-center
+            .col-xl-6.col-xl-offset-3.col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1.col-xs-12
+                .card
+                    .card-header 회원가입
+                    .card-body
+                        form#register-form(method='post')
+                            div
+                                input#id.form-control(type='text', name='id', placeholder='ID', autofocus)
+                            div
+                                input#password.form-control(type='password', name='password', placeholder='Password')
+                            div
+                                input#username.form-control(type='text', name='username', placeholder='Username')
+                            div
+                                input#email.form-control(type='email', name='email', placeholder='E-Mail')
+                            div
+                                input.form-control.btn.btn-primary(type='submit', value='회원가입')

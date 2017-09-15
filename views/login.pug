@@ -1,0 +1,28 @@
+extends templet
+
+mixin alert(contents)
+    .alert.alert-primary(role='alert')= contents
+
+block append styles
+    link(rel='stylesheet', href='stylesheets/login.css')
+block append scripts
+    script(src='/jquery-validation/dist/jquery.validate.min.js')
+    script(src='/javascripts/login.js')
+block append contents
+    .container
+        .row.justify-content-center
+            .col-xl-6.col-xl-offset-3.col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1.col-xs-12
+                .card
+                    .card-header 로그인
+                    .card-body
+                        form#login-form(method='post')
+                            div.form-group
+                                input.form-control#id(type='text', name='id', placeholder='ID', autofocus)
+                            div.form-group
+                                input.form-control#password(type='password', name='password', placeholder='Password')
+                            div.form-group
+                                input.form-control.btn.btn-outline-primary(type='submit', value='로그인')
+                            div.form-group
+                                a.btn.btn-block.btn-warning.btn_login(href='/auth/kakao') 카카오계정 로그인
+                            div.form-group
+                                a.btn.btn-block.btn-primary.btn_login(href='/auth/facebook') Facebook 로그인

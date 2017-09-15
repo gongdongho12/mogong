@@ -1,0 +1,39 @@
+extends templet
+
+mixin board(id, title, author, name, date)
+    tr
+        td= id
+        td= title
+        td= name
+        td= date
+
+block append scripts
+    script(src='/javascripts/board.js')
+
+block prepend menus
+    +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
+    +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
+
+block append contents
+    .container
+        .row.justify-content-center
+            .col
+                .card
+                    .card-header 게시물
+                    table.table
+                        thead
+                            tr
+                                th
+                                th 제목
+                                th 작성자
+                                th 작성일
+                        tbody
+                            each result in results
+                                +board(result.id, result.title, result.author, result.name, result.datetime)
+        br
+        //button.btn.btn-outline-dark.pull-right(type='button', onclick="location.href='/board/write'")
+        //    i.fa.fa-pencil(aria-hidden='true')  글쓰기
+        a.btn.btn-outline-dark.pull-right(href='/board/write', role='button', aria-pressed='true')
+            i.fa.fa-pencil(aria-hidden='true')  글쓰기
+        footer
+            p © Company 2017

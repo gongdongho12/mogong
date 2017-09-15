@@ -1,0 +1,19 @@
+doctype html
+html(lang='ko')
+    head
+        title #{title}
+        meta(charset='utf-8')
+        meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+        script(src='/jquery/dist/jquery.min.js')
+        script(src='/popper.js/dist/umd/popper.min.js')
+        script(src='/bootstrap/dist/js/bootstrap.min.js')
+        block styles
+            link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+            link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
+            link(rel='stylesheet', href='/stylesheets/navbar-top-fixed.css')
+            link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        block contents
+            if navbar
+                include navbar
+        block scripts

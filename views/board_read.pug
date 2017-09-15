@@ -1,0 +1,63 @@
+extends templet
+
+mixin review(review_results)
+    each review_result in review_results
+        .list-group-item.flex-column.align-items-start
+            .d-flex.w-100.justify-content-between
+                div
+                    h5.mb-1= review_result.name
+                if auth && review_result.author == user.id
+                    button.close(type='button', value=review_result.id)
+                        span(aria-hidden='true') ×
+            p.mb-1= review_result.contents
+            small= review_result.datetime
+
+block append styles
+    link(rel='stylesheet', href='/stylesheets/board_read.css')
+    script(src='/javascripts/board_read.js')
+
+block prepend menus
+    +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
+    +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
+
+block append contents
+    #deleteConfirmModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteConfirmModal', aria-hidden='true')
+        .modal-dialog(role='document')
+            form#board_remove(method='post', action='/board/delete/' + result.id)
+                .modal-content
+                    .modal-header
+                        h5#deleteConfirmModalLabel.modal-title 삭제하시겠습니까?
+                    .modal-body 삭제 이후에는 데이터를 복구하실 수 없습니다.
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') 취소
+                        button.btn.btn-danger(type='submit') 삭제
+
+    .container
+        .card.text-center
+            .card-header.justify-content-between
+                .d-flex.w-100.justify-content-between
+                    small= '작성자: ' + result.name
+                    small= '작성일: ' + result.datetime
+                h5.mb-1= result.title
+            .card-body !{result.contents}
+            .card-footer
+                .list-group
+                    .list-group-item.flex-column.align-items-start
+                        if auth
+                            form#wrtie_review
+                                .d-flex.w-100.justify-content-between
+                                    textarea#message.form-control(name='message', rows='3', placeholder='댓글을 입력해 주세요.')
+                                    button#review_button.btn.btn-dark(type='button') 올리기
+                        else
+                            p.mb-1
+                                | 댓글은&nbsp;
+                                a(href='/popup/login', target='_blank') 로그인
+                                | 이 필요한 서비스 입니다.
+                    +review(review_results)
+        br
+        input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/board'")
+        if(auth && result.author == user.id)
+            button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
+                i.fa.fa-pencil(aria-hidden='true')  수정
+            button.btn.btn-outline-danger.pull-right(type='button', data-toggle='modal', data-target='#deleteConfirmModal')
+                i.fa.fa-trash-o(aria-hidden='true')  삭제
