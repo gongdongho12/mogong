@@ -18,6 +18,14 @@ block append contents
                         | #{user.email}
                 ul.list-group.list-group-flush
                     li.list-group-item 정회원
+
+                    //에프리타임 링크 넣는 곳
+                    li.list-group-item
+                        | 에프리타임 링크
+                        br
+                        input(type='text', name='title', placeholder='에프리타임 링크')
+                        button 수정
+
                 .card-body
                     //a.card-link(href='#') 이름 변경
                     a.card-link(href='#', data-toggle='modal', data-target="#modifyName", role='button', aria-pressed='true')
