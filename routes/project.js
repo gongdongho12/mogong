@@ -166,11 +166,30 @@ router.post('/:id/team', function (req, res, next) {
 });
 
 function make_table(day, start, end) {
-    var start_hour = 9 + start / 60;
-    var start_min = start % 60;
-    var end_hour = 9 + end / 60;
-    var end_min = end % 60;
-    var data = "timetable.addEvent('회의 가능', '월', new Date(2015, 7, " + (17 + day) + ", " + start_hour + ", " + start_min + "), new Date(2015, 7, " + (17 + day) + ", " + end_hour + ", " + end_min + "), {url: '#'});";
+    console.log(start, end);
+    var start_hour = Number(9 + start / 60);
+    var start_min = Number(start % 60);
+    var end_hour = Number(9 + end / 60);
+    var end_min = Number(end % 60);
+    var day_of_date;
+    switch (day) {
+        case "mon":
+            day_of_date = "월";
+            break;
+        case "tue":
+            day_of_date = "화";
+            break;
+        case "wed":
+            day_of_date = "수";
+            break;
+        case "thu":
+            day_of_date = "목";
+            break;
+        case "fri":
+            day_of_date = "금";
+            break;
+    }
+    var data = "timetable.addEvent('회의 가능', '" + day_of_date + "', new Date(2015, 7, " + 17 + ", " + start_hour + ", " + start_min + "), new Date(2015, 7, " + 17 + ", " + end_hour + ", " + end_min + "), {url: '#'});";
     return data;
 }
 
@@ -182,7 +201,7 @@ router.post('/:id/calculate', function (req, res, next) {
     //     user: req.user,
     //     table_engine: ""
     // });
-    console.log(JSON.stringify(req.body));
+    // console.log(JSON.stringify(req.body));
     request.post({
         url: 'http://172.16.0.40:8000/api',
         json: true,
@@ -190,13 +209,55 @@ router.post('/:id/calculate', function (req, res, next) {
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(JSON.stringify(body));
+            var table_js = "var timetable = new Timetable();timetable.setScope(9, 20);timetable.addLocations(['월', '화', '수', '목', '금']);";
+            console.log(JSON.stringify(body.calculate.mon));
+            for(var i = 0; i < body.calculate.mon.length; i++) {
+                console.log(JSON.stringify(body.calculate.mon[i]));
+                table_js += make_table("mon", body.calculate.mon[i].start, body.calculate.mon[i].end);
+            }
+            for(var i = 0; i < body.calculate.tue.length; i++) {
+                console.log(JSON.stringify(body.calculate.tue[i]));
+                table_js += make_table("tue", body.calculate.tue[i].start, body.calculate.tue[i].end);
+            }
+            for(var i = 0; i < body.calculate.wed.length; i++) {
+                console.log(JSON.stringify(body.calculate.wed[i]));
+                table_js += make_table("wed", body.calculate.wed[i].start, body.calculate.wed[i].end);
+            }
+            for(var i = 0; i < body.calculate.thu.length; i++) {
+                console.log(JSON.stringify(body.calculate.thu[i]));
+                table_js += make_table("thu", body.calculate.thu[i].start, body.calculate.thu[i].end);
+            }for(var i = 0; i < body.calculate.fri.length; i++) {
+                console.log(JSON.stringify(body.calculate.fri[i]));
+                table_js += make_table("fri", body.calculate.fri[i].start, body.calculate.fri[i].end);
+            }
+
+
+            // for(var date in body.calculate['tue']) {
+            //     console.log(JSON.stringify(date));
+            //     table_js += make_table("tue", date.start, date.end);
+            // }
+            // for(var date in body.calculate['wed']) {
+            //     console.log(JSON.stringify(date));
+            //     table_js += make_table("wed", date.start, date.end);
+            // }
+            // for(var date in body.calculate['thu']) {
+            //     console.log(JSON.stringify(date));
+            //     table_js += make_table("thu", date.start, date.end);
+            // }
+            // for(var date in body.calculate['fri']) {
+            //     console.log(JSON.stringify(date));
+            //     table_js += make_table("fri", date.start, date.end);
+            // }
+            table_js += "var renderer = new Timetable.Renderer(timetable);renderer.draw('.timetable');";
+            console.log(table_js);
+            res.render('time_table', {
+                title: '모두의 공강',
+                navbar: true,
+                auth: req.isAuthenticated(),
+                user: req.user,
+                time_table: table_js
+            });
         }
-        res.render('time_table', {
-            title: '모두의 공강',
-            navbar: true,
-            auth: req.isAuthenticated(),
-            user: req.user
-        });
     });
     // res.redirect('/project/' + req.params.id);
 });
