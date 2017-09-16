@@ -3,8 +3,11 @@ extends templet
 mixin project(id, title)
     .col-md-4
         h5= title
-        p
-            a.btn.btn-primary(href="/project/" + id, role="button") 들어가기 »
+        p#btnEnter
+            a.btn.btn-primary.btn-sm(href="/project/" + id, role="button") 들어가기 »
+
+block append styles
+    link(rel='stylesheet', href='stylesheets/my_project.css')
 
 block prepend menus
     +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
@@ -22,6 +25,7 @@ block append contents
             if my_projects
                 each project in my_projects
                     +project(project.id, project.title)
+        br
         .row.justify-content-center
             h4 공개된 프로젝트
         hr
