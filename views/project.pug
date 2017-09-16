@@ -10,7 +10,7 @@ mixin board(id, title, author, name, date)
 mixin team(user_id, name, type, table_url)
     tr
         td
-            input(name='table_url[]', type='checkbox', value=table_url)
+            input(name='table_url', type='checkbox', value=table_url)
         td= user_id
         td= name
         case type
