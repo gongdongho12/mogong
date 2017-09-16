@@ -13,7 +13,7 @@ block prepend menus
 block append contents
     .container
         .row.justify-content-center
-            h3 진행중인 프로젝트
+            h4 진행중인 프로젝트
         hr
         .row.justify-content-center
             //+project(0, '이산수학 1분반 2조', '과제 하기 싫어요ㅠㅠ')
@@ -23,7 +23,7 @@ block append contents
                 each project in my_projects
                     +project(project.id, project.title)
         .row.justify-content-center
-            h3 공개된 프로젝트
+            h4 공개된 프로젝트
         hr
         .row.justify-content-center
             //+project(0, '이산수학 1분반 2조')

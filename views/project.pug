@@ -10,7 +10,7 @@ mixin board(id, title, author, name, date)
 mixin team(user_id, name, type, table_url)
     tr
         td
-            input(name='id', type='checkbox', value=user_id)
+            input(name='table_url[]', type='checkbox', value=table_url)
         td= user_id
         td= name
         case type
@@ -66,24 +66,26 @@ block append contents
     .container
         .row.justify-content-center
             .col-md-8
-                .card
-                    .card-header 팀원 목록
-                    table.table
-                        thead
-                            tr
-                                th 선택
-                                th 아이디
-                                th 이름
-                                th 권한
-                                th 시간표 링크
-                        tbody
-                            +team(result.author, result.name, 2, result.table_url)
-                            each team in teams
-                                +team(team.user_id, team.name, team.type, team.table_url)
-
-                br
-                a.btn.btn-outline-dark.pull-right(href='/team/add', data-toggle='modal', data-target="#addTeamModal", role='button', aria-pressed='true')
-                    i.fa.fa-user-plus(aria-hidden='true')  팀원 추가
+                form(action='http://172.16.0.40:8000/api', method='post')
+                    .card
+                        .card-header 팀원 목록
+                        table.table
+                            thead
+                                tr
+                                    th 선택
+                                    th 아이디
+                                    th 이름
+                                    th 권한
+                                    th 시간표 링크
+                            tbody
+                                +team(result.author, result.name, 2, result.table_url)
+                                each team in teams
+                                    +team(team.user_id, team.name, team.type, team.table_url)
+                    br
+                    a.btn.btn-outline-dark.pull-right(href='/team/add', data-toggle='modal', data-target="#addTeamModal", role='button', aria-pressed='true')
+                        i.fa.fa-user-plus(aria-hidden='true')  팀원 추가
+                    button.btn.btn-primary.pull-right(type='submit')
+                        i.fa.fa-calculator(aria-hidden='true')  시간표 계산하기
             .col-md-4
                 .card
                     .card-header 게시물
