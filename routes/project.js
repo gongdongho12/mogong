@@ -73,7 +73,39 @@ router.post('/add', auth.isAuthenticated, function (req, res, next) {
 });
 
 router.get('/:id', auth.isAuthenticated, function (req, res, next) {
-    
+    pool.getConnection(function (err, connection) {
+        if (err)
+            throw err;
+        else {
+            connection.query('select (select count(*) from team where project_id = ? and user_id = ?) + (select count(*) from project where id = ? and author = ?) as count', [req.params.id, req.user.id, req.params.id, req.user.id], function (err, result) {
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    next(err);
+                } else {
+                    console.log(JSON.stringify(result));
+                    if(result[0].count >= 1) {
+                        next();
+                    } else {
+                        // res.status(404).json({message: '가입된 사용자가 아닙니다.'});
+                        console.log()
+                        connection.query('INSERT INTO team (project_id, user_id, type) VALUES (?, ?, ?);', [req.params.id, req.user.id, 1], function (err, results) {
+                            if (err) {
+                                var err = new Error('Not Found');
+                                err.status = 404;
+                                // next(err);
+
+                                res.status(404).json({message: 'Server Fail'});
+                            } else {
+                                next();
+                            }
+                        });
+                    }
+                    connection.release();
+                }
+            });
+        }
+    });
 }, function (req, res, next) {
     pool.getConnection(function (err, connection) {
         if (err)

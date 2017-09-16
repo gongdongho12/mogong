@@ -4,7 +4,7 @@ mixin project(id, title)
     .col-md-4
         h5= title
         p
-            a.btn.btn-primary(href="/project/" + id, role="button") 참가하기 »
+            a.btn.btn-primary(href="/project/" + id, role="button") 들어가기 »
 
 block prepend menus
     +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
