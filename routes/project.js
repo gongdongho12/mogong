@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 
 var mysql_dbc = require('../db/db_con')();
 var pool = mysql_dbc.init_pool();
@@ -165,15 +166,16 @@ router.post('/:id/team', function (req, res, next) {
 });
 
 router.post('/:id/calculate', function (req, res, next) {
-    console.log(JSON.stringify(req.body));
-    res.send('test');
+    console.log(JSON.stringify(req.body.table_url));
     request.post({
         url: 'http://172.16.0.40:8000/api',
-        form: req.body
+        json: true,
+        form: req.body.table_url
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(JSON.stringify(body));
         }
+        res.send('test');
     });
     // res.redirect('/project/' + req.params.id);
 });
