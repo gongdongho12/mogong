@@ -9,7 +9,7 @@ block prepend menus
     +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
     +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
 
-block appegnd contents
+block append contents
     .container
         form#board_write(method='post', action='', onsubmit='return postForm()', target='_blank')
             .card

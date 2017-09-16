@@ -1,11 +1,10 @@
 extends templet
 
-mixin board(id, title, author, name, date)
+mixin board(id, title, author)
     tr
         td= id
         td= title
-        td= name
-        td= date
+        td= author
 
 mixin team(user_id, name, type, table_url)
     tr
@@ -23,7 +22,7 @@ mixin team(user_id, name, type, table_url)
         td= table_url
 
 block append scripts
-    //script(src='/javascripts/board.js')
+    script(src='/javascripts/board.js')
 
 block prepend menus
     +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
@@ -46,19 +45,17 @@ block append contents
             .col-12
                 .card.text-center
                     .card-header.justify-content-between
-                        h5.mb-1 title
-                    .card-body 쌸라쌸라
+                        h5.mb-1= result.title
+                    .card-body !{result.description}
                 br
-                input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/board'")
+                input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/project'")
                 if(auth && result.author == user.id)
-                    button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
+                    button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='edit/" + result.id + "'")
                         i.fa.fa-pencil(aria-hidden='true')  수정
                     button.btn.btn-outline-danger.pull-right(type='button', data-toggle='modal', data-target='#deleteConfirmModal')
                         i.fa.fa-trash-o(aria-hidden='true')  삭제
 
         br
-        //button.btn.btn-outline-dark.pull-right(type='button', onclick="location.href='/board/write'")
-        //    i.fa.fa-pencil(aria-hidden='true')  글쓰기
         footer
         br
 
@@ -87,18 +84,19 @@ block append contents
                     button.btn.btn-primary.pull-right(type='submit')
                         i.fa.fa-calculator(aria-hidden='true')  시간표 계산하기
             .col-md-4
-                .card
+                .card.board
                     .card-header 게시물
                     table.table
                         thead
                             tr
-                                th
+                                th id
                                 th 제목
                                 th 작성자
-                                th 작성일
                         tbody
+                            each board in boards
+                                +board(board.id, board.title, board.author)
                 br
-                a.btn.btn-outline-dark.pull-right(href='/board/write', role='button', aria-pressed='true')
+                a.btn.btn-outline-dark.pull-right(href='/project/' + result.id + '/write', role='button', aria-pressed='true')
                     i.fa.fa-pencil(aria-hidden='true')  글쓰기
         footer
             p 모두의 공강 © Company 2017

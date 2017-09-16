@@ -21,22 +21,19 @@ block append contents
 
                     //에프리타임 링크 넣는 곳
                     li.list-group-item
-                        | 에프리타임 링크
-                        br
-                        //input(type='text', name='title', placeholder='에프리타임 링크')
-                        input(type='text', name='title', placeholder='#{user.table_url}')
-                        button 수정
+                        form(action='/user/' + user.id + '/edit', method='post')
+                            .input-group
+                                input.form-control(type='text', name='table_url', placeholder='에브리타임 링크', value=table_url)
+                                span.input-group-btn
+                                    button.btn.btn-secondary(type='submit') 수정
 
-                .card-body
-                    //a.card-link(href='#') 이름 변경
-                    a.card-link(href='#', data-toggle='modal', data-target="#modifyName", role='button', aria-pressed='true')
-                        i.fa.fa-user-plus(aria-hidden='true')  이름 변경
-                    //a.card-link(href='#') 비밀번호 변경
-                    a.card-link(href='#', data-toggle='modal', data-target="#modifyPassword", role='button', aria-pressed='true')
-                        i.fa.fa-user-plus(aria-hidden='true')  비밀번호 변경
-                    //a.card-link(href='#') 탈퇴하기
-                    a.card-link(href='#', data-toggle='modal', data-target="#withdraw", role='button', aria-pressed='true')
-                        i.fa.fa-user-plus(aria-hidden='true')  탈퇴하기
+                //.card-body
+                //    //a.card-link(href='#') 이름 변경
+                //    a.card-link(href='#', data-toggle='modal', data-target="#modifyName", role='button', aria-pressed='true') 이름 변경
+                //    //a.card-link(href='#') 비밀번호 변경
+                //    a.card-link(href='#', data-toggle='modal', data-target="#modifyPassword", role='button', aria-pressed='true') 비밀번호 변경
+                //    //a.card-link(href='#') 탈퇴하기
+                //    a.card-link(href='#', data-toggle='modal', data-target="#withdraw", role='button', aria-pressed='true') 탈퇴하기
         hr
         footer
             p 모두의 공강 © Company 2017

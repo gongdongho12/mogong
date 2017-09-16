@@ -1,11 +1,11 @@
 extends templet
 
-mixin project(id, title, description)
+mixin project(id, title)
     .col-md-4
-        h2= title
-        p= description
-        p
-            a.btn.btn-secondary(href="/project/" + id , role="button") 참가하기 »
+        .card(style='width: 20rem;')
+            .card-body
+                h4.card-title= title
+                a.btn.btn-primary.pull-right.btn-sm(href="/project/" + id, role="button") 들어가기 »
 
 block prepend menus
     +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
@@ -14,13 +14,13 @@ block prepend menus
 block append contents
     .banner
     .container
-        .row
-            +project(0, '이산수학 1분반 2조', '과제 하기 싫어요ㅠㅠ')
-            +project(0, '안드로이드 짱짱', '안드로이드 조별 스터디 모집합니다.')
-            +project(0, 'SW기술영어 3조 팀플', 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.')
-            if project_result
-                each project in project_results
-                    +project(project.id, project.title, project.description)
+        .card
+            h5.card-header 공개된 프로젝트
+            .card-body
+                .row.justify-content-center
+                    if all_projects
+                        each project in all_projects
+                            +project(project.id, project.title)
         hr
         footer
             p 모두의 공강 © Company 2017

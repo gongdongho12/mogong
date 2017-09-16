@@ -73,6 +73,80 @@ router.post('/add', auth.isAuthenticated, function (req, res, next) {
     });
 });
 
+router.get('/edit/:id', auth.isAuthenticated, function (req, res, next) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            res.status(500).json({message: 'Server Fail'});
+            throw err;
+        } else {
+            connection.query('select * from project where id = ?', req.params.id, function (err, result) {
+                // console.log(JSON.stringify(result));
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    // next(err);
+                    res.status(404).json({message: 'Insert Fail'});
+                } else {
+                    res.render('edit_project', {title: '프로젝트 수정', navbar: true, auth: req.isAuthenticated(), user: req.user, result: result[0]});
+                    // res.render('refresh', {url: '/project/' + result.insertId});
+                }
+                connection.release();
+            });
+        }
+    });
+});
+
+/* GET home page. */
+router.post('/edit/:id', auth.isAuthenticated, function (req, res, next) {
+    console.log(req.body.title, req.body.description, req.user.id, req.body.visible);
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            res.status(500).json({message: 'Server Fail'});
+            throw err;
+        } else {
+            connection.query('update project set title = ?, description = ?, visible = ? where id = ?', [req.body.title, req.body.description, (req.body.visible=='true'?1:0), req.params.id], function (err, result) {
+                // console.log(JSON.stringify(result));
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    // next(err);
+                    res.status(404).json({message: 'Insert Fail'});
+                } else {
+                    res.render('refresh', {url: '/project/' + req.params.id});
+                }
+                connection.release();
+            });
+        }
+    });
+});
+
+router.get('/:id/write', auth.isAuthenticated, function (req, res, next) {
+    res.render('board_write', {title: '게시판 작성', navbar: true, auth: req.isAuthenticated(), user: req.user, result: {}});
+});
+
+/* GET home page. */
+router.post('/:id/write', auth.isAuthenticated, function (req, res, next) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            res.status(500).json({message: 'Server Fail'});
+            throw err;
+        } else {
+            connection.query('INSERT INTO board (title, project_id, author, contents) VALUES (?, ?, ?, ?);', [req.body.title, req.params.id, req.user.id, req.body.contents], function (err, result) {
+                // console.log(JSON.stringify(result));
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    // next(err);
+                    res.status(404).json({message: 'Insert Fail'});
+                } else {
+                    res.render('refresh', {url: '/board/' + result.insertId});
+                }
+                connection.release();
+            });
+        }
+    });
+});
+
 router.get('/:id', auth.isAuthenticated, function (req, res, next) {
     pool.getConnection(function (err, connection) {
         if (err)
@@ -125,13 +199,22 @@ router.get('/:id', auth.isAuthenticated, function (req, res, next) {
                             err.status = 404;
                             next(err);
                         } else {
-                            res.render('project', {
-                                title: result.title,
-                                navbar: true,
-                                auth: req.isAuthenticated(),
-                                user: req.user,
-                                teams: teams,
-                                result: result[0]
+                            connection.query('select * from board where project_id = ?', req.params.id, function (err, boards) {
+                                if (err) {
+                                    var err = new Error('Not Found');
+                                    err.status = 404;
+                                    next(err);
+                                } else {
+                                    res.render('project', {
+                                        title: result.title,
+                                        navbar: true,
+                                        auth: req.isAuthenticated(),
+                                        user: req.user,
+                                        teams: teams,
+                                        result: result[0],
+                                        boards: boards
+                                    });
+                                }
                             });
                         }
                     });

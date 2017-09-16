@@ -53,7 +53,8 @@ exports.sns_auth = function (type, profile, done) {
                                             id: result3[0].id,
                                             username: result3[0].name,
                                             email: result3[0].email,
-                                            signup_date: result3[0].signup_date
+                                            signup_date: result3[0].signup_date,
+                                            table_url: result3[0].table_url
                                         });
                                     }
                                 });
@@ -65,7 +66,8 @@ exports.sns_auth = function (type, profile, done) {
                             id: result1[0].id,
                             username: result1[0].name,
                             email: result1[0].email,
-                            signup_date: result1[0].signup_date
+                            signup_date: result1[0].signup_date,
+                            table_url: result1[0].table_url
                         });
                     }
                 }
@@ -116,7 +118,8 @@ exports.init = function(app) {
                                     id: result[0].id,
                                     username: result[0].name,
                                     email: result[0].email,
-                                    signup_date: result[0].signup_date
+                                    signup_date: result[0].signup_date,
+                                    table_url: result[0].table_url
                                 });
                             }
                         }
