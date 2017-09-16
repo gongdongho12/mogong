@@ -55,7 +55,7 @@ block append contents
                                 | 이 필요한 서비스 입니다.
                     +review(review_results)
         br
-        input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/board'")
+        input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/project/" + result.project_id + "'")
         if(auth && result.author == user.id)
             button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
                 i.fa.fa-pencil(aria-hidden='true')  수정
