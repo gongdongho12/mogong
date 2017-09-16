@@ -169,8 +169,11 @@ router.post('/:id/calculate', function (req, res, next) {
     res.send('test');
     request.post({
         url: 'http://172.16.0.40:8000/api',
-        json: true,
         form: req.body
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(JSON.stringify(body));
+        }
     });
     // res.redirect('/project/' + req.params.id);
 });
