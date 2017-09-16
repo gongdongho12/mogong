@@ -1,0 +1,79 @@
+extends templet
+
+mixin board(id, title, author, name, date)
+    tr
+        td= id
+        td= title
+        td= name
+        td= date
+
+mixin user(id, name, author, name, date)
+    tr
+        td= id
+        td= title
+        td= name
+        td= date
+
+block append scripts
+    script(src='/javascripts/board.js')
+
+block prepend menus
+    +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
+    +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
+
+block append contents
+    .container
+        .row.justify-content-center
+            .col-12
+                .card.text-center
+                    .card-header.justify-content-between
+                        h5.mb-1 title
+                    .card-body 쌸라쌸라
+                br
+                input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/board'")
+                if(auth && result.author == user.id)
+                    button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
+                        i.fa.fa-pencil(aria-hidden='true')  수정
+                    button.btn.btn-outline-danger.pull-right(type='button', data-toggle='modal', data-target='#deleteConfirmModal')
+                        i.fa.fa-trash-o(aria-hidden='true')  삭제
+
+        br
+        //button.btn.btn-outline-dark.pull-right(type='button', onclick="location.href='/board/write'")
+        //    i.fa.fa-pencil(aria-hidden='true')  글쓰기
+        footer
+            p © Company 2017
+        br
+
+block append contents
+    .container
+        .row.justify-content-center
+            .col-md-6
+                .card
+                    .card-header 팀원 목록
+                    table.table
+                        thead
+                            tr
+                                th
+                                th 팀명
+                                th 권한
+                                th 시간표 링크
+                        tbody
+                br
+                a.btn.btn-outline-dark.pull-right(href='/team/add', role='button', aria-pressed='true')
+                    i.fa.fa-user-plus(aria-hidden='true')  팀원 추가
+            .col-md-6
+                .card
+                    .card-header 게시물
+                    table.table
+                        thead
+                            tr
+                                th
+                                th 제목
+                                th 작성자
+                                th 작성일
+                        tbody
+                br
+                a.btn.btn-outline-dark.pull-right(href='/board/write', role='button', aria-pressed='true')
+                    i.fa.fa-pencil(aria-hidden='true')  글쓰기
+        footer
+            p © Company 2017

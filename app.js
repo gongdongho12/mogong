@@ -12,6 +12,7 @@ var flash = require('connect-flash');
 var index = require('./routes/index');
 var api = require('./routes/api');
 var board = require('./routes/board');
+var project = require('./routes/project');
 
 var auth = require('./auth/auth-passport');
 // var passport = require('passport');
@@ -48,6 +49,7 @@ auth.init(app);
 
 app.use('/', index);
 app.use('/api/v1', api);
+app.use('/project', project);
 app.use('/board', board);
 
 // catch 404 and forward to error handler

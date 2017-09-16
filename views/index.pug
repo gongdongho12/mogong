@@ -1,41 +1,35 @@
 extends templet
 
+mixin project(id, title, description)
+    .col-md-4
+        h2= title
+        p= description
+        p
+            a.btn.btn-secondary(href="#", role="button") 참가하기 »
+
 block prepend menus
-    +link(auth?'/logout':'/login', auth?'로그아웃':'로그인')
-    +link(auth?'/user/'+ user.id:'/register', auth?'마이페이지':'회원가입')
+    +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
+    +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
 
 block append contents
     .container
-        .row
-            .jumbotron
-                h1.display-3 Hello, world!
-                p.lead
-                    | This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-                hr.my-4
-                p
-                    | It uses utility classes for typography and spacing to space content out within the larger container.
-                p.lead
-                    a.btn.btn-primary.btn-lg(href='#', role='button') Learn more
+        .jumbotron
+            h1.display-3 모두의 공강에 오신것을 환영합니다.
+            p.lead
+                | This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
+            hr.my-4
+            p
+                | It uses utility classes for typography and spacing to space content out within the larger container.
+            p.lead
+                a.btn.btn-primary.btn-lg(href='#', role='button') Learn more
     .container
         .row
-            .col-md-4
-                h2 Heading
-                p
-                    | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                p
-                    a.btn.btn-secondary(href="#", role="button") View details »
-            .col-md-4
-                h2 Heading
-                p
-                    | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                p
-                    a.btn.btn-secondary(href="#", role="button") View details »
-            .col-md-4
-                h2 Heading
-                p
-                    | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                p
-                    a.btn.btn-secondary(href="#", role="button") View details »
+            +project(0, '이산수학 1분반 2조', '과제 하기 싫어요ㅠㅠ')
+            +project(0, '안드로이드 짱짱', '안드로이드 조별 스터디 모집합니다.')
+            +project(0, 'SW기술영어 3조 팀플', 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.')
+            if project_result
+                each project in project_results
+                    +project(project.id, project.title, project.description)
         hr
         footer
-            p © Company 2017
+            p 모두의 공강 © Company 2017
