@@ -7,12 +7,13 @@ mixin board(id, title, author, name, date)
         td= name
         td= date
 
-mixin user(id, name, author, name, date)
+mixin team(id, user_id, name, type, table_url)
     tr
         td= id
-        td= title
+        td= user_id
         td= name
-        td= date
+        td= type
+        td= table_url
 
 block append scripts
     script(src='/javascripts/board.js')
@@ -31,11 +32,11 @@ block append contents
                     .card-body 쌸라쌸라
                 br
                 input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/board'")
-                if(auth && result.author == user.id)
-                    button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
-                        i.fa.fa-pencil(aria-hidden='true')  수정
-                    button.btn.btn-outline-danger.pull-right(type='button', data-toggle='modal', data-target='#deleteConfirmModal')
-                        i.fa.fa-trash-o(aria-hidden='true')  삭제
+                //if(auth && result.author == user.id)
+                //    button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
+                //        i.fa.fa-pencil(aria-hidden='true')  수정
+                //    button.btn.btn-outline-danger.pull-right(type='button', data-toggle='modal', data-target='#deleteConfirmModal')
+                //        i.fa.fa-trash-o(aria-hidden='true')  삭제
 
         br
         //button.btn.btn-outline-dark.pull-right(type='button', onclick="location.href='/board/write'")
@@ -47,21 +48,23 @@ block append contents
 block append contents
     .container
         .row.justify-content-center
-            .col-md-6
+            .col-md-12
                 .card
                     .card-header 팀원 목록
                     table.table
                         thead
                             tr
                                 th
-                                th 팀명
+                                th 아이디
+                                th 이름
                                 th 권한
                                 th 시간표 링크
                         tbody
+                            +team(1, 'ka1273', '강동호', 2, 'http://everytime.kr/timetable/2017/2/6714113')
                 br
                 a.btn.btn-outline-dark.pull-right(href='/team/add', role='button', aria-pressed='true')
                     i.fa.fa-user-plus(aria-hidden='true')  팀원 추가
-            .col-md-6
+            .col-md-12
                 .card
                     .card-header 게시물
                     table.table

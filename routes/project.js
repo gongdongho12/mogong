@@ -38,10 +38,16 @@ router.get('/', function (req, res, next) {
         title: '프로젝트 제목',
         navbar: true,
         auth: req.isAuthenticated(),
+        user: req.user
         // user: req.user,
         // results: result
     });
 });
+
+router.get('/add', auth.isAuthenticated, function (req, res, next) {
+    res.render('add_project', {title: '프로젝트 생성', navbar: true, auth: req.isAuthenticated(), user: req.user});
+});
+
 
 // /* GET home page. */
 // router.get('/write', auth.isAuthenticated, function (req, res, next) {

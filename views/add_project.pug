@@ -1,0 +1,36 @@
+extends templet
+
+block append styles
+    script(src='/javascripts/summernote.min.js')
+    script(src='/lang/summernote-ko-KR.js')
+    link(href='/stylesheets/summernote.css', rel='stylesheet')
+
+block prepend menus
+    +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
+    +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
+
+block append contents
+    .container
+        form#project_write(method='post', action='', onsubmit='return postForm()', target='_blank')
+            .card
+                .card-header
+                    h5.mb-1
+                        input.form-control(type='text', name='title', placeholder='프로젝트 제목')
+                .card-body
+                    .form-group.summernote
+                        textarea#summernote(name='description')
+                        script(src='/javascripts/board_write.js')
+                .card-footer
+                    h5 프로젝트를 공개하시겠습니까?
+                    .form-check
+                        label.form-check-label
+                            input#visible.form-check-input(type='radio', name='visible', value='true', checked)
+                            |  공개
+                    .form-check
+                        label.form-check-label
+                            input#invisible.form-check-input(type='radio', name='visible', value='false')
+                            |  비공개
+            br
+            input.btn.btn-outline-primary(type='button', value='목록', onclick="location.href='/'")
+            button.btn.btn-outline-dark.pull-right(type='submit')
+                i.fa.fa-floppy-o(aria-hidden='true')  생성
