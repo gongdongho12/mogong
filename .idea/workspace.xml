@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="31459a88-bb78-446e-8791-c067de8431ed" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/board_read.pug" afterPath="$PROJECT_DIR$/views/board_read.pug" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/project.js" afterPath="$PROJECT_DIR$/routes/project.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="project.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="project.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/project.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="41" lean-forward="false" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+            <state relative-caret-position="402">
+              <caret line="99" column="54" lean-forward="false" selection-start-line="99" selection-start-column="54" selection-end-line="99" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -30,7 +30,7 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
+            <state relative-caret-position="427">
               <caret line="194" column="37" lean-forward="false" selection-start-line="194" selection-start-column="37" selection-end-line="194" selection-end-column="37" />
               <folding />
             </state>
@@ -40,18 +40,28 @@
       <file leaf-file-name="board.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/board.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
+            <state relative-caret-position="3179">
               <caret line="187" column="37" lean-forward="true" selection-start-line="187" selection-start-column="37" selection-end-line="187" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="board_read.pug" pinned="false" current-in-tab="true">
+      <file leaf-file-name="project.pug" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/project.pug">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="96" column="27" lean-forward="false" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="board_read.pug" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/board_read.pug">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="57" column="125" lean-forward="false" selection-start-line="57" selection-start-column="125" selection-end-line="57" selection-end-column="125" />
+            <state relative-caret-position="227">
+              <caret line="16" column="34" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -90,13 +100,14 @@
       <find>text</find>
       <find>note</find>
       <find>append</find>
-      <find>delete</find>
       <find>insert</find>
       <find>team</find>
       <find>top</find>
       <find>make_table</find>
-      <find>relese</find>
       <find>read</find>
+      <find>board</find>
+      <find>relese</find>
+      <find>delete</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -139,17 +150,17 @@
         <option value="$PROJECT_DIR$/public/stylesheets/navbar-top-fixed.css" />
         <option value="$PROJECT_DIR$/views/add_project.pug" />
         <option value="$PROJECT_DIR$/views/edit_project.pug" />
-        <option value="$PROJECT_DIR$/public/javascripts/board.js" />
         <option value="$PROJECT_DIR$/views/board_write.pug" />
         <option value="$PROJECT_DIR$/views/navbar.pug" />
         <option value="$PROJECT_DIR$/views/project.pug" />
         <option value="$PROJECT_DIR$/views/my_project.pug" />
         <option value="$PROJECT_DIR$/views/index.pug" />
         <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
-        <option value="$PROJECT_DIR$/routes/project.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/routes/board.js" />
         <option value="$PROJECT_DIR$/views/board_read.pug" />
+        <option value="$PROJECT_DIR$/public/javascripts/board.js" />
+        <option value="$PROJECT_DIR$/routes/project.js" />
       </list>
     </option>
   </component>
@@ -336,7 +347,7 @@
       <workItem from="1505533424125" duration="16561000" />
       <workItem from="1505559407643" duration="17000" />
       <workItem from="1505559435913" duration="119000" />
-      <workItem from="1505559660552" duration="24220000" />
+      <workItem from="1505559660552" duration="24838000" />
     </task>
     <task id="LOCAL-00001" summary="add project rendering">
       <created>1505526312937</created>
@@ -429,11 +440,25 @@
       <option name="project" value="LOCAL" />
       <updated>1505593267729</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="change list_menu as board">
+      <created>1505593847349</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1505593847349</updated>
+    </task>
+    <task id="LOCAL-00015" summary="bug fix board rows.">
+      <created>1505594220845</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1505594220845</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156685000" />
+    <option name="totallyTimeSpent" value="157303000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -457,7 +482,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32648125" sideWeight="0.47709656" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39941478" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39903265" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -487,7 +512,9 @@
     <MESSAGE value="make timetable calculate sysyem" />
     <MESSAGE value="make project's board and delete system." />
     <MESSAGE value="make board delete system." />
-    <option name="LAST_COMMIT_MESSAGE" value="make board delete system." />
+    <MESSAGE value="change list_menu as board" />
+    <MESSAGE value="bug fix board rows." />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fix board rows." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -766,14 +793,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/navbar.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="40" lean-forward="true" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/board.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -790,26 +809,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/project.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="33" column="84" lean-forward="true" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="84" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/user.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="26" column="52" lean-forward="true" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/board.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="8" lean-forward="true" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -838,6 +841,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/navbar.pug">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="40" lean-forward="true" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/my_project.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -846,34 +857,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/project.js">
+    <entry file="file://$PROJECT_DIR$/views/board_read.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="41" lean-forward="false" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+        <state relative-caret-position="227">
+          <caret line="16" column="34" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
+    <entry file="file://$PROJECT_DIR$/views/project.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="194" column="37" lean-forward="false" selection-start-line="194" selection-start-column="37" selection-end-line="194" selection-end-column="37" />
+        <state relative-caret-position="456">
+          <caret line="96" column="27" lean-forward="false" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/board.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/board.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
+        <state relative-caret-position="3179">
           <caret line="187" column="37" lean-forward="true" selection-start-line="187" selection-start-column="37" selection-end-line="187" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/board_read.pug">
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="57" column="125" lean-forward="false" selection-start-line="57" selection-start-column="125" selection-end-line="57" selection-end-column="125" />
+        <state relative-caret-position="427">
+          <caret line="194" column="37" lean-forward="false" selection-start-line="194" selection-start-column="37" selection-end-line="194" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/project.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="99" column="54" lean-forward="false" selection-start-line="99" selection-start-column="54" selection-end-line="99" selection-end-column="54" />
           <folding />
         </state>
       </provider>

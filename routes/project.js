@@ -97,7 +97,7 @@ router.post('/delete/:id', auth.isAuthenticated, function (req, res, next) {
                                 // next(err);
                                 res.status(404).json({message: 'Insert Fail'});
                             } else {
-                                res.render('refresh', {url: '/project'});
+                                res.redirect('/project');
                             }
                         });
                     }
