@@ -7,22 +7,40 @@ mixin board(id, title, author, name, date)
         td= name
         td= date
 
-mixin team(id, user_id, name, type, table_url)
+mixin team(user_id, name, type, table_url)
     tr
-        td= id
+        td
+            input(name='id', type='checkbox', value=user_id)
         td= user_id
         td= name
-        td= type
+        case type
+            when 0
+                td 미인증
+            when 1
+                td 팀원
+            when 2
+                td 팀장
         td= table_url
 
 block append scripts
-    script(src='/javascripts/board.js')
+    //script(src='/javascripts/board.js')
 
 block prepend menus
     +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
     +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
 
 block append contents
+    #addTeamModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteConfirmModal', aria-hidden='true')
+        .modal-dialog(role='document')
+            form#addTeam(method='post', action='/project/' + result.id + '/team')
+                .modal-content
+                    .modal-header
+                        h5#addTeamModalLabel.modal-title 팀원 초대
+                    .modal-body
+                        input.form-control(name='user_id', type='text', placeholder='아이디를 입력해 주세요.')
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') 취소
+                        button.btn.btn-primary(type='submit') 추가
     .container
         .row.justify-content-center
             .col-12
@@ -32,39 +50,41 @@ block append contents
                     .card-body 쌸라쌸라
                 br
                 input.btn.btn-outline-primary(type='submit', value='목록', onclick="location.href='/board'")
-                //if(auth && result.author == user.id)
-                //    button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
-                //        i.fa.fa-pencil(aria-hidden='true')  수정
-                //    button.btn.btn-outline-danger.pull-right(type='button', data-toggle='modal', data-target='#deleteConfirmModal')
-                //        i.fa.fa-trash-o(aria-hidden='true')  삭제
+                if(auth && result.author == user.id)
+                    button.btn.btn-outline-info.pull-right(type='button', onclick="location.href='write/" + result.id + "'")
+                        i.fa.fa-pencil(aria-hidden='true')  수정
+                    button.btn.btn-outline-danger.pull-right(type='button', data-toggle='modal', data-target='#deleteConfirmModal')
+                        i.fa.fa-trash-o(aria-hidden='true')  삭제
 
         br
         //button.btn.btn-outline-dark.pull-right(type='button', onclick="location.href='/board/write'")
         //    i.fa.fa-pencil(aria-hidden='true')  글쓰기
         footer
-            p © Company 2017
         br
 
 block append contents
     .container
         .row.justify-content-center
-            .col-md-12
+            .col-md-8
                 .card
                     .card-header 팀원 목록
                     table.table
                         thead
                             tr
-                                th
+                                th 선택
                                 th 아이디
                                 th 이름
                                 th 권한
                                 th 시간표 링크
                         tbody
-                            +team(1, 'ka1273', '강동호', 2, 'http://everytime.kr/timetable/2017/2/6714113')
+                            +team(result.author, result.name, 2, result.table_url)
+                            each team in teams
+                                +team(team.user_id, team.name, team.type, team.table_url)
+
                 br
-                a.btn.btn-outline-dark.pull-right(href='/team/add', role='button', aria-pressed='true')
+                a.btn.btn-outline-dark.pull-right(href='/team/add', data-toggle='modal', data-target="#addTeamModal", role='button', aria-pressed='true')
                     i.fa.fa-user-plus(aria-hidden='true')  팀원 추가
-            .col-md-12
+            .col-md-4
                 .card
                     .card-header 게시물
                     table.table

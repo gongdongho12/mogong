@@ -10,42 +10,126 @@ var passport = require('passport');
 var auth = require('../auth/auth-passport');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    // pool.getConnection(function (err, connection) {
-    //     if (err)
-    //         throw err;
-    //     else {
-    //         connection.query('select b.*, u.name from board as b inner join user as u on b.author = u.id order by b.id desc', function (err, result) {
-    //             if (err) {
-    //                 var err = new Error('Not Found');
-    //                 err.status = 404;
-    //                 next(err);
-    //             } else {
-    //                 console.log(JSON.stringify(result));
-    //                 res.render('board', {
-    //                     title: '게시판',
-    //                     navbar: true,
-    //                     auth: req.isAuthenticated(),
-    //                     user: req.user,
-    //                     results: result
-    //                 });
-    //             }
-    //             connection.release();
-    //         });
-    //     }
-    // });
-    res.render('project', {
-        title: '프로젝트 제목',
-        navbar: true,
-        auth: req.isAuthenticated(),
-        user: req.user
-        // user: req.user,
-        // results: result
+router.get('/', auth.isAuthenticated, function (req, res, next) {
+    pool.getConnection(function (err, connection) {
+        if (err)
+            throw err;
+        else {
+            connection.query('(select p.* from project as p inner join team as t on p.id = t.project_id where t.user_id = ?) union (select * from project as p where p.author = ?) order by id desc;', [req.user.id, req.user.id], function (err, my_projects) {
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    next(err);
+                } else {
+                    connection.query('select * from project as p where visible = 1 order by id desc', function (err, all_projects) {
+                        if (err) {
+                            var err = new Error('Not Found');
+                            err.status = 404;
+                            next(err);
+                        } else {
+                            res.render('my_project', {
+                                title: '프로젝트',
+                                navbar: true,
+                                auth: req.isAuthenticated(),
+                                user: req.user,
+                                all_projects: all_projects,
+                                my_projects: my_projects
+                            });
+                        }
+                    });
+                }
+                connection.release();
+            });
+        }
     });
 });
 
 router.get('/add', auth.isAuthenticated, function (req, res, next) {
     res.render('add_project', {title: '프로젝트 생성', navbar: true, auth: req.isAuthenticated(), user: req.user});
+});
+
+/* GET home page. */
+router.post('/add', auth.isAuthenticated, function (req, res, next) {
+    console.log(req.body.title, req.body.description, req.user.id, req.body.visible);
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            res.status(500).json({message: 'Server Fail'});
+            throw err;
+        } else {
+            connection.query('INSERT INTO project (title, description, author, visible) VALUES (?, ?, ?, ?);', [req.body.title, req.body.description, req.user.id, (req.body.visible=='true'?1:0)], function (err, result) {
+                // console.log(JSON.stringify(result));
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    // next(err);
+                    res.status(404).json({message: 'Insert Fail'});
+                } else {
+                    res.render('refresh', {url: '/project/' + result.insertId});
+                }
+                connection.release();
+            });
+        }
+    });
+});
+
+router.get('/:id', auth.isAuthenticated, function (req, res, next) {
+    
+}, function (req, res, next) {
+    pool.getConnection(function (err, connection) {
+        if (err)
+            throw err;
+        else {
+            connection.query('select p.*, u.email, u.name, u.table_url from project as p inner join user as u on u.id = p.author where p.id = ?', req.params.id, function (err, result) {
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    next(err);
+                } else {
+                    console.log(JSON.stringify(result));
+                    connection.query('select t.*, u.name, u.email, u.table_url from team as t inner join user as u on u.id = t.user_id where project_id = ?', req.params.id, function (err, teams) {
+                        if (err) {
+                            var err = new Error('Not Found');
+                            err.status = 404;
+                            next(err);
+                        } else {
+                            res.render('project', {
+                                title: '프로젝트 제목',
+                                navbar: true,
+                                auth: req.isAuthenticated(),
+                                user: req.user,
+                                teams: teams,
+                                result: result[0]
+                            });
+                        }
+                    });
+                }
+                connection.release();
+            });
+        }
+    });
+});
+
+router.post('/:id/team', function (req, res, next) {
+    console.log(req.params.id, req.body.user_id);
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            res.status(500).json({message: 'Server Fail'});
+            // res.redirect('/board/write/' + req.params.id);
+            throw err;
+        } else {
+            connection.query('INSERT INTO team (project_id, user_id, type) VALUES (?, ?, ?);', [req.params.id, req.body.user_id, 1], function (err, results) {
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    // next(err);
+
+                    res.status(404).json({message: 'Server Fail'});
+                } else {
+                    res.redirect('/project/' + req.params.id);
+                }
+            });
+        }
+    });
 });
 
 

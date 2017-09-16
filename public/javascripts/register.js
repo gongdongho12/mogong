@@ -76,6 +76,9 @@ $(document).ready(function() {
             },
             email: {
                 required: true
+            },
+            table_url: {
+                required: true
             }
         }
     });

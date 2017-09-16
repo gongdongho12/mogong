@@ -1,0 +1,37 @@
+extends templet
+
+mixin project(id, title)
+    .col-md-4
+        h5= title
+        p
+            a.btn.btn-primary(href="/project/" + id, role="button") 참가하기 »
+
+block prepend menus
+    +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')
+    +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
+
+block append contents
+    .container
+        .row.justify-content-center
+            h3 진행중인 프로젝트
+        hr
+        .row.justify-content-center
+            //+project(0, '이산수학 1분반 2조', '과제 하기 싫어요ㅠㅠ')
+            //+project(0, '안드로이드 짱짱', '안드로이드 조별 스터디 모집합니다.')
+            //+project(0, 'SW기술영어 3조 팀플', 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.')
+            if my_projects
+                each project in my_projects
+                    +project(project.id, project.title)
+        .row.justify-content-center
+            h3 공개된 프로젝트
+        hr
+        .row.justify-content-center
+            //+project(0, '이산수학 1분반 2조')
+            //+project(0, '안드로이드 짱짱')
+            //+project(0, 'SW기술영어 3조 팀플')
+            if all_projects
+                each project in all_projects
+                    +project(project.id, project.title)
+        hr
+        footer
+            p 모두의 공강 © Company 2017

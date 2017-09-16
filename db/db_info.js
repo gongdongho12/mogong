@@ -5,7 +5,7 @@ module.exports = (function () {
       port: '3306',
       user: 'root',
       password: 'dongho135',
-      database: 'node'
+      database: 'mogong'
     },
     real: { // real server db info
       host: '',

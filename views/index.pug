@@ -5,7 +5,7 @@ mixin project(id, title, description)
         h2= title
         p= description
         p
-            a.btn.btn-secondary(href="#", role="button") 참가하기 »
+            a.btn.btn-secondary(href="/project/" + id , role="button") 참가하기 »
 
 block prepend menus
     +link(auth ? '/logout' : '/login', auth ? '로그아웃' : '로그인')

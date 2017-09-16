@@ -87,7 +87,7 @@ router.post('/register',
             if (err)
                 throw err;
             else {
-                connection.query('INSERT INTO user(id, password, name, email) VALUES (?, ?, ?, ?)', [req.body.id, auth.hash(req.body.password), req.body.username, req.body.email], function (err, result) {
+                connection.query('INSERT INTO user(id, password, name, email, table_url) VALUES (?, ?, ?, ?, ?)', [req.body.id, auth.hash(req.body.password), req.body.username, req.body.email, req.body.table_url], function (err, result) {
                     connection.release();
                     if (err) {
                         console.log('err :' + err);
