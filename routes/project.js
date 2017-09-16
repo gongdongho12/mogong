@@ -165,17 +165,38 @@ router.post('/:id/team', function (req, res, next) {
     });
 });
 
+function make_table(day, start, end) {
+    var start_hour = 9 + start / 60;
+    var start_min = start % 60;
+    var end_hour = 9 + end / 60;
+    var end_min = end % 60;
+    var data = "timetable.addEvent('회의 가능', '월', new Date(2015, 7, " + (17 + day) + ", " + start_hour + ", " + start_min + "), new Date(2015, 7, " + (17 + day) + ", " + end_hour + ", " + end_min + "), {url: '#'});";
+    return data;
+}
+
 router.post('/:id/calculate', function (req, res, next) {
-    console.log(JSON.stringify(req.body.table_url));
+    // res.render('time_table', {
+    //     title: '모두의 공강',
+    //     navbar: true,
+    //     auth: req.isAuthenticated(),
+    //     user: req.user,
+    //     table_engine: ""
+    // });
+    console.log(JSON.stringify(req.body));
     request.post({
         url: 'http://172.16.0.40:8000/api',
         json: true,
-        form: req.body.table_url
+        form: req.body
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(JSON.stringify(body));
         }
-        res.send('test');
+        res.render('time_table', {
+            title: '모두의 공강',
+            navbar: true,
+            auth: req.isAuthenticated(),
+            user: req.user
+        });
     });
     // res.redirect('/project/' + req.params.id);
 });

@@ -10,7 +10,7 @@ mixin board(id, title, author, name, date)
 mixin team(user_id, name, type, table_url)
     tr
         td
-            input(name='table_url', type='checkbox', value=table_url)
+            input(name='table_url[]', type='checkbox', value=table_url)
         td= user_id
         td= name
         case type
@@ -66,7 +66,7 @@ block append contents
     .container
         .row.justify-content-center
             .col-md-8
-                form(action='/project/' + result.id + '/calculate', method='post')
+                form(action='/project/' + result.id + '/calculate', method='post', target='_blank')
                     .card
                         .card-header 팀원 목록
                         table.table

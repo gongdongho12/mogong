@@ -12,16 +12,7 @@ block prepend menus
     +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
 
 block append contents
-    .container
-        .jumbotron
-            h1.display-3 모두의 공강에 오신것을 환영합니다.
-            p.lead
-                | This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-            hr.my-4
-            p
-                | It uses utility classes for typography and spacing to space content out within the larger container.
-            p.lead
-                a.btn.btn-primary.btn-lg(href='#', role='button') Learn more
+    .banner
     .container
         .row
             +project(0, '이산수학 1분반 2조', '과제 하기 싫어요ㅠㅠ')
