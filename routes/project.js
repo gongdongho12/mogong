@@ -38,8 +38,8 @@ router.get('/', auth.isAuthenticated, function (req, res, next) {
                             });
                         }
                     });
+                    connection.release();
                 }
-                connection.release();
             });
         }
     });
@@ -68,6 +68,41 @@ router.post('/add', auth.isAuthenticated, function (req, res, next) {
                     res.render('refresh', {url: '/project/' + result.insertId});
                 }
                 connection.release();
+            });
+        }
+    });
+});
+
+/* GET home page. */
+router.post('/delete/:id', auth.isAuthenticated, function (req, res, next) {
+    console.log(req.body.title, req.body.description, req.user.id, req.body.visible);
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            res.status(500).json({message: 'Server Fail'});
+            throw err;
+        } else {
+            connection.query('select * from project where id = ?', req.params.id, function (err, result) {
+                // console.log(JSON.stringify(result));
+                if (err) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    // next(err);
+                    res.status(404).json({message: 'Insert Fail'});
+                } else {
+                    if (result[0].author == req.user.id) {
+                        connection.query('DELETE FROM project WHERE id = ?', req.params.id, function (err, result) {
+                            if (err) {
+                                var err = new Error('Not Found');
+                                err.status = 404;
+                                // next(err);
+                                res.status(404).json({message: 'Insert Fail'});
+                            } else {
+                                res.render('refresh', {url: '/project'});
+                            }
+                        });
+                    }
+                    connection.release();
+                }
             });
         }
     });
@@ -217,9 +252,9 @@ router.get('/:id', auth.isAuthenticated, function (req, res, next) {
                                 }
                             });
                         }
+                        connection.release();
                     });
                 }
-                connection.release();
             });
         }
     });
@@ -243,6 +278,7 @@ router.post('/:id/team', function (req, res, next) {
                 } else {
                     res.redirect('/project/' + req.params.id);
                 }
+                connection.release();
             });
         }
     });

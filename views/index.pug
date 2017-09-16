@@ -2,7 +2,7 @@ extends templet
 
 mixin project(id, title)
     .col-md-4
-        .card(style='width: 20rem;')
+        .card.project(style='width: 20rem;')
             .card-body
                 h4.card-title= title
                 a.btn.btn-primary.pull-right.btn-sm(href="/project/" + id, role="button") 들어가기 »

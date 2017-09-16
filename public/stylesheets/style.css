@@ -17,6 +17,10 @@
     color: #000000;
 }
 
+.project {
+    margin-top: 10px;
+}
+
 .banner {
     background:url('/images/banner.png')no-repeat;
     background-size: cover;

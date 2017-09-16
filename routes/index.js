@@ -23,6 +23,7 @@ router.get('/', function (req, res, next) {
                 } else {
                     res.render('index', {title: '모두의 공강', navbar: true, auth: req.isAuthenticated(), user: req.user, all_projects: all_projects});
                 }
+                connection.release();
             });
         }
     });
@@ -168,6 +169,7 @@ router.get('/user/:id', auth.isAuthenticated, function (req, res) {
                         table_url: results[0].table_url
                     });
                 }
+                connection.release();
             });
         }
     });
@@ -190,6 +192,7 @@ router.post('/user/:id/edit', auth.isAuthenticated, function (req, res) {
                 } else {
                     res.redirect('/user/' + req.params.id);
                 }
+                connection.release();
             });
         }
     });

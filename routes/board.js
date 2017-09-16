@@ -89,8 +89,8 @@ router.get('/write/:id', auth.isAuthenticated, function (req, res, next) {
                     } else {
                         res.status(404).json({message: 'Not Authenticated'});
                     }
+                    connection.release();
                 }
-                connection.release();
             });
         }
     });
@@ -224,13 +224,13 @@ router.post('/review/write', auth.isAuthenticated, function (req, res, next) {
             throw err;
         } else {
             connection.query('INSERT INTO review (board_id, author, contents) VALUES (?, ?, ?)', [paths[paths.length - 1], req.user.id, req.body.message], function (err, results) {
-                connection.release();
                 if (err) {
                     console.log('err :' + err);
                     res.status(404).json({message: 'fail'});
                 } else {
                     res.json({message: 'success'});
                 }
+                connection.release();
             });
         }
     });

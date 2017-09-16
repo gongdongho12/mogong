@@ -29,6 +29,16 @@ block prepend menus
     +link(auth ? '/user/' + user.id : '/register', auth ? '마이페이지' : '회원가입')
 
 block append contents
+    #deleteConfirmModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteConfirmModal', aria-hidden='true')
+        .modal-dialog(role='document')
+            form#project_remove(method='post', action='/project/delete/' + result.id)
+                .modal-content
+                    .modal-header
+                        h5#deleteConfirmModalLabel.modal-title 프로젝트를 삭제하시겠습니까?
+                    .modal-body 삭제 이후에는 데이터를 복구하실 수 없습니다.
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') 취소
+                        button.btn.btn-danger(type='submit') 삭제
     #addTeamModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteConfirmModal', aria-hidden='true')
         .modal-dialog(role='document')
             form#addTeam(method='post', action='/project/' + result.id + '/team')
