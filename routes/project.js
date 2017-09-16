@@ -28,7 +28,7 @@ router.get('/', auth.isAuthenticated, function (req, res, next) {
                             next(err);
                         } else {
                             res.render('my_project', {
-                                title: '프로젝트',
+                                title: '나의 프로젝트',
                                 navbar: true,
                                 auth: req.isAuthenticated(),
                                 user: req.user,
@@ -125,7 +125,7 @@ router.get('/:id', auth.isAuthenticated, function (req, res, next) {
                             next(err);
                         } else {
                             res.render('project', {
-                                title: '프로젝트 제목',
+                                title: result.title,
                                 navbar: true,
                                 auth: req.isAuthenticated(),
                                 user: req.user,
@@ -162,6 +162,17 @@ router.post('/:id/team', function (req, res, next) {
             });
         }
     });
+});
+
+router.post('/:id/calculate', function (req, res, next) {
+    console.log(JSON.stringify(req.body));
+    res.send('test');
+    request.post({
+        url: 'http://172.16.0.40:8000/api',
+        json: true,
+        form: req.body
+    });
+    // res.redirect('/project/' + req.params.id);
 });
 
 
